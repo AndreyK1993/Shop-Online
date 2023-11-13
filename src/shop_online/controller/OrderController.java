@@ -2,14 +2,14 @@ package shop_online.controller;
 
 import shop_online.entity.Buyer;
 import shop_online.entity.Purchase;
-import shop_online.model.impl.AppBaseModel;
-import shop_online.model.impl.AppDiscountModel;
+import shop_online.model.impl.InStoreOrder;
+import shop_online.model.impl.DeliveryOrder;
 import shop_online.utils.Rounder;
-import shop_online.view.AppView;
+import shop_online.view.OrderView;
 
-public class AppController {
+public class OrderController {
 
-    private final AppView view = new AppView();
+    private final OrderView view = new OrderView();
     private final static String CURRENCY = "USD";
 
     public void getPayment() {
@@ -17,14 +17,15 @@ public class AppController {
         Buyer buyer = getBuyer(data);
         Purchase purchase = getPurchase(data);
         String output;
-        if (purchase.getQuota() <= 2) {
-            AppBaseModel model = new AppBaseModel();
+
+        if (purchase.getOrder() <= 2) {
+            InStoreOrder model = new InStoreOrder();
             String payment = Rounder.roundValue(model.calcPayment(purchase));
             output = "\nBuyer: " + buyer.getName() + ", " + buyer.getPhone() +
                     "\nPayment is " + CURRENCY + " " + payment;
             view.getOutput(output);
         } else {
-            AppDiscountModel model = new AppDiscountModel();
+            DeliveryOrder model = new DeliveryOrder();
             String payment = Rounder.roundValue(model.calcPayment(purchase));
             output = "\nBuyer: " + buyer.getName() + ", " + buyer.getPhone() +
                     "\nPayment is " + CURRENCY + " " + payment;
@@ -32,7 +33,22 @@ public class AppController {
         }
     }
 
+//    private static void runOption(int option) {
+//        switch (option) {
+//            case 1 -> {
+//                OrderController controller = new OrderController();
+//                controller.getDeliveryOrder();
+//            }
+//            case 2 -> {
+//                OrderController controller = new OrderController();
+//                controller.getInStoreOrder();
+//            }
+//            default -> System.out.println("No such option.");
+//        }
+//    }
+
     private Buyer getBuyer(String[] data) {
+
         return new Buyer(data[0], data[1]);
     }
 

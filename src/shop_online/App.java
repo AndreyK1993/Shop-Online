@@ -1,11 +1,11 @@
 package shop_online;
 
-import shop_online.controller.AppController;
+import shop_online.controller.OrderController;
 
 public class App {
 
     public static void main(String[] args) {
-        AppController controller = new AppController();
+        OrderController controller = new OrderController();
         controller.getPayment();
     }
 }
