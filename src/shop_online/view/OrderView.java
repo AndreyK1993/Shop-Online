@@ -20,7 +20,6 @@ public class OrderView {
                 1 - Yes.
                 2 - No.
                 """);
-        scanner.close();
         return new String[]{name, phone, order};
     }
 
