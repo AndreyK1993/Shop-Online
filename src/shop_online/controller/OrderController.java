@@ -1,9 +1,11 @@
+// OrderController.java
 package shop_online.controller;
 
 import shop_online.entity.Buyer;
 import shop_online.entity.Purchase;
-import shop_online.model.impl.InStoreOrder;
+import shop_online.model.OrderComponent;
 import shop_online.model.impl.DeliveryOrder;
+import shop_online.model.impl.InStoreOrder;
 import shop_online.utils.Rounder;
 import shop_online.view.OrderView;
 
@@ -18,42 +20,29 @@ public class OrderController {
         Purchase purchase = getPurchase(data);
         String output;
 
-        if (purchase.getOrder() <= 2) {
-            InStoreOrder model = new InStoreOrder();
-            String payment = Rounder.roundValue(model.calcPayment(purchase));
-            output = "\nBuyer: " + buyer.getName() + ", " + buyer.getPhone() +
-                    "\nPayment is " + CURRENCY + " " + payment;
-            view.getOutput(output);
-        } else {
+        boolean deliveryOption = view.wantDelivery();
+        if (deliveryOption) {
             DeliveryOrder model = new DeliveryOrder();
-            String payment = Rounder.roundValue(model.calcPayment(purchase));
-            output = "\nBuyer: " + buyer.getName() + ", " + buyer.getPhone() +
-                    "\nPayment is " + CURRENCY + " " + payment;
-            view.getOutput(output);
+            output = generateOutput(buyer, model, purchase);
+        } else {
+            InStoreOrder model = new InStoreOrder();
+            output = generateOutput(buyer, model, purchase);
         }
+
+        view.getOutput(output);
     }
 
-//    private static void runOption(int option) {
-//        switch (option) {
-//            case 1 -> {
-//                OrderController controller = new OrderController();
-//                controller.getDeliveryOrder();
-//            }
-//            case 2 -> {
-//                OrderController controller = new OrderController();
-//                controller.getInStoreOrder();
-//            }
-//            default -> System.out.println("No such option.");
-//        }
-//    }
-
     private Buyer getBuyer(String[] data) {
-
         return new Buyer(data[0], data[1]);
     }
 
     private Purchase getPurchase(String[] data) {
-        return new Purchase(Integer.parseInt(data[2]),
-                Double.parseDouble(data[3]));
+        return new Purchase(Double.parseDouble(data[2]), Double.parseDouble(data[2]));
+    }
+
+    private String generateOutput(Buyer buyer, OrderComponent model, Purchase purchase) {
+        String payment = Rounder.roundValue(model.calcPayment(purchase));
+        return "\nBuyer: " + buyer.getName() + ", " + buyer.getPhone() +
+                "\nPayment is " + CURRENCY + " " + payment;
     }
 }
