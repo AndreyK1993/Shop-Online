@@ -1,4 +1,3 @@
-// OrderController.java
 package shop_online.controller;
 
 import shop_online.entity.Buyer;
