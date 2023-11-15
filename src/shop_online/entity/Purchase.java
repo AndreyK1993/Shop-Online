@@ -1,4 +1,3 @@
-// Purchase.java
 package shop_online.entity;
 
 public class Purchase {

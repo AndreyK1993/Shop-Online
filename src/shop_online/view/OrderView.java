@@ -1,4 +1,4 @@
-// OrderView.java
+
 package shop_online.view;
 
 import java.util.Locale;
