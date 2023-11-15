@@ -7,6 +7,6 @@ public class InStoreOrder implements OrderComponent {
 
     public double calcPayment(Purchase purchase) {
 
-        return purchase.getOrder();
+        return purchase.getQuantity();
     }
 }

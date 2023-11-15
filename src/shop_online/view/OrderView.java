@@ -16,10 +16,16 @@ public class OrderView {
         System.out.print("Enter buyer phone: ");
         String phone = scanner.nextLine().trim();
 
-        System.out.print("Enter order amount: ");
-        String order = scanner.nextLine().trim();
+        System.out.print("Enter quantity of goods: ");
+        int quantity = scanner.nextInt();
 
-        return new String[]{name, phone, order};
+        boolean wantDelivery = wantDelivery();
+        return new String[]{name, phone, String.valueOf(quantity),
+                String.valueOf(wantDelivery)};
+    }
+
+    public void getOutput(String output) {
+        System.out.println(output);
     }
 
     public boolean wantDelivery() {
@@ -28,9 +34,5 @@ public class OrderView {
                 "\n2 - In-store.");
         int choice = scanner.nextInt();
         return choice == 1;
-    }
-
-    public void getOutput(String output) {
-        System.out.println(output);
     }
 }

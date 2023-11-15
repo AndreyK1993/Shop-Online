@@ -1,19 +1,21 @@
+// Purchase.java
 package shop_online.entity;
-
 
 public class Purchase {
 
-    private final double order;
-    private final double price;
+    private final double quantity;
+    private final boolean wantDelivery;
 
-    public Purchase(double order, double price) {
-
-        this.order = order;
-        this.price = price;
-
+    public Purchase(double quantity, boolean wantDelivery) {
+        this.quantity = quantity;
+        this.wantDelivery = wantDelivery;
     }
 
-    public double getOrder() { return order;}
+    public double getQuantity() {
+        return quantity;
+    }
 
-    public double getPrice() { return price;}
+    public boolean wantDelivery() {
+        return wantDelivery;
+    }
 }

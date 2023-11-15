@@ -20,13 +20,12 @@ public class OrderController {
         Purchase purchase = getPurchase(data);
         String output;
 
-        boolean deliveryOption = view.wantDelivery();
-        if (deliveryOption) {
-            DeliveryOrder model = new DeliveryOrder();
+        if (purchase.getQuantity() > 0) {
+            boolean wantDelivery = Boolean.parseBoolean(data[3]);
+            OrderComponent model = wantDelivery ? new DeliveryOrder() : new InStoreOrder();
             output = generateOutput(buyer, model, purchase);
         } else {
-            InStoreOrder model = new InStoreOrder();
-            output = generateOutput(buyer, model, purchase);
+            output = "\nInvalid quantity entered.";
         }
 
         view.getOutput(output);
@@ -37,12 +36,15 @@ public class OrderController {
     }
 
     private Purchase getPurchase(String[] data) {
-        return new Purchase(Double.parseDouble(data[2]), Double.parseDouble(data[2]));
+        double quantity = Double.parseDouble(data[2]);
+        boolean wantDelivery = Boolean.parseBoolean(data[3]);
+        return new Purchase(quantity, wantDelivery);
     }
 
     private String generateOutput(Buyer buyer, OrderComponent model, Purchase purchase) {
-        String payment = Rounder.roundValue(model.calcPayment(purchase));
+        double totalCost = model.calcPayment(purchase);
+        String payment = Rounder.roundValue(totalCost);
         return "\nBuyer: " + buyer.getName() + ", " + buyer.getPhone() +
-                "\nPayment is " + CURRENCY + " " + payment;
+                "\nTotal payment is " + CURRENCY + " " + payment;
     }
 }
