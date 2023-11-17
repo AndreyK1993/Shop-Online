@@ -12,6 +12,10 @@ public class Purchase {
         this.wantDelivery = wantDelivery;
     }
 
+    public double getSum() {
+        return quantity * price;
+    }
+
     public double getQuantity() {
         return quantity;
     }

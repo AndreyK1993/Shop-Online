@@ -21,7 +21,7 @@ public class OrderController {
         String output;
 
         //проверка на корректность введенного количества товара
-        if (purchase.getSum() > 0) {
+        if (purchase.getQuantity() > 0) {
             boolean wantDelivery = Boolean.parseBoolean(data[3]); //определение, нужна ли доставка
             OrderComponent model = wantDelivery ?
                     new DeliveryOrder() : new InStoreOrder(); //создание соответствующего объекта модели в зависимости от выбора доставки

@@ -9,7 +9,7 @@ public class DeliveryOrder implements OrderComponent {
 
     @Override
     public double calcPayment(Purchase purchase) {
-        double cost = purchase.getQuantity();
+        double cost = purchase.getSum();
         if (cost <= 200) {
             return cost + cost * taksRates[0] / 100;
         } else {
