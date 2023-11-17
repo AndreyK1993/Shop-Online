@@ -17,10 +17,13 @@ public class OrderView {
         String phone = scanner.nextLine().trim();
 
         System.out.print("Enter quantity of goods: ");
-        int quantity = scanner.nextInt();
+        String quantity = scanner.nextLine().trim();
+
+        System.out.print("Enter price: ");
+        String price = scanner.nextLine().trim();
 
         boolean wantDelivery = wantDelivery();
-        return new String[]{name, phone, String.valueOf(quantity),
+        return new String[]{name, phone, quantity, price,
                 String.valueOf(wantDelivery)};
     }
 

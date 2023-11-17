@@ -21,7 +21,7 @@ public class OrderController {
         String output;
 
         //проверка на корректность введенного количества товара
-        if (purchase.getQuantity() > 0) {
+        if (purchase.getSum() > 0) {
             boolean wantDelivery = Boolean.parseBoolean(data[3]); //определение, нужна ли доставка
             OrderComponent model = wantDelivery ?
                     new DeliveryOrder() : new InStoreOrder(); //создание соответствующего объекта модели в зависимости от выбора доставки
@@ -41,15 +41,20 @@ public class OrderController {
     //метод для создания объекта Purchase на основе данных, полученных от пользователя
     private Purchase getPurchase(String[] data) {
         double quantity = Double.parseDouble(data[2]);
-        boolean wantDelivery = Boolean.parseBoolean(data[3]);
-        return new Purchase(quantity, wantDelivery);
+        double price = Double.parseDouble(data[3]);
+        boolean wantDelivery = Boolean.parseBoolean(data[4]);
+        return new Purchase(quantity, price, wantDelivery);
     }
 
     //метод для генерации текста вывода на основе данных о покупателе, заказе и модели оплаты
     private String generateOutput(Buyer buyer, OrderComponent model, Purchase purchase) {
         double totalCost = model.calcPayment(purchase);
         String payment = Rounder.roundValue(totalCost);
+        String deliveryType = purchase.wantDelivery() ? "Delivery" : "In-store";
         return "\nBuyer: " + buyer.getName() + ", " + buyer.getPhone() +
+                "\nQuantity: " + purchase.getQuantity() +
+                "\nPrice per item: " + Rounder.roundValue(purchase.getPrice()) +
+                "\nDelivery Type: " + deliveryType +
                 "\nTotal payment is " + CURRENCY + " " + payment;
     }
 }
